@@ -31,10 +31,43 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Course whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Course whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read int|null $categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $students
+ * @property-read int|null $students_count
+ * @property-read \App\Models\User $teacher
  */
 class Course extends Model
 {
+    protected $fillable = [
+      "user_id", "title", "description",
+      "picture", "price", "featured", "status"
+    ];
+
     const PUBLISHED = 1;
     const PENDING = 2;
     const REJECTED = 3;
+
+    public function imagePath() {
+        return sprintf('%s/%s', 'storage/courses', $this->picture);
+    }
+
+    /** Many to many, inverse relationship */
+    public function categories (){
+        return $this->belongsToMany(Category::class);
+    }
+
+    /** Many to many, with pivot table */
+    public function students (){
+        return $this->belongsToMany(User::class, "course_student");
+    }
+
+    public function teacher (){
+        return $this->belongsTo(User::class, "user_id");
+    }
+
+    /** one to many */
+    public function reviews (){
+        $this->hasMany(Review::class);
+    }
 }

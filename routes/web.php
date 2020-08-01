@@ -18,3 +18,8 @@ Route::get('/', 'WelcomeController@index')->name("welcome");
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'course', 'as' => 'courses.'], function () {
+    Route::get('/', 'CourseController@index')->name('index');
+    Route::post('/search', 'CourseController@search')->name('search');
+});

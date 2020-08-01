@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <!-- categorie -->
-        @forelse($categories as $category)
+            @forelse($categories as $category)
             <!-- category -->
                 <div class="col-lg-4 col-md-6">
                     <div class="categorie-item">

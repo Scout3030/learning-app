@@ -3,14 +3,25 @@
     <div class="container">
         <div class="search-warp">
             <div class="section-title text-white">
-                <h2>Search your course</h2>
+                <h2>{{__('Busca tu curso')}}</h2>
             </div>
             <div class="row">
                 <div class="col-md-10 offset-md-1">
                     <!-- search form -->
-                    <form class="course-search-form">
-                        <input type="text" placeholder="Course">
-                        <button class="site-btn">Search Course</button>
+                    <form
+                            class="course-search-form"
+                            action="{{route('courses.search')}}"
+                            method="POST"
+                    >
+                        @csrf
+                        <input
+                            type="text"
+                            placeholder="{{__('Qué curso buscas')}}"
+                            autocomplete="off"
+                            value="{{ session('search[courses]') }}"
+                            name="search"
+                        >
+                        <button type="submit" class="site-btn">{{__('Buscar')}}</button>
                     </form>
                 </div>
             </div>

@@ -34,7 +34,7 @@ class Category extends Model
         return $this->belongsToMany(Course::class);
     }
 
-        public function imagePath() {
+    public function imagePath() {
         return sprintf('%s/%s', 'storage/categories', $this->picture);
     }
 }

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory('categories');
         $this->call(CategorySeeder::class);
 
-        /**$this->call(UserSeeder::class);
+        $this->call(UserSeeder::class);
 
         Storage::deleteDirectory('courses');
         Storage::makeDirectory('courses');
@@ -23,6 +23,5 @@ class DatabaseSeeder extends Seeder
 
         Storage::deleteDirectory('units');
         Storage::makeDirectory('units');
-         * */
     }
 }

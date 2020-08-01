@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -62,7 +63,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data)
     {
@@ -74,8 +75,17 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function registered(Request $request, $user)
+    {
+        if ($request->ajax()){
+            return response()->json(["message" => __("Gracias por crear tu cuenta como profesor en :app", ["app" => env('APP_NAME')])]);
+        }
+        return redirect("/");
+    }
+
     public function redirectPath()
     {
+        /** rewrite the redirectPath */
         return "/";
     }
 }
