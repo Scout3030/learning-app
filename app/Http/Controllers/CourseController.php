@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helpers\Currency;
+use App\Models\Course;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        return back();
-        dd(session('search[courses]'));
+        $courses = Course::filtered();
+        return view('learning.courses.index', compact('courses'));
     }
 
     public function search()
@@ -21,5 +22,10 @@ class CourseController extends Controller
             session()->save();
         }
         return redirect(route('courses.index'));
+    }
+
+    public function show(Course $course) {
+        $course->load("units", "students", "reviews");
+        return view('learning.courses.show', compact('course'));
     }
 }
