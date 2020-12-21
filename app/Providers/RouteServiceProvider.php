@@ -37,32 +37,32 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-//        Route::bind('user', function ($value, $route) {
-//            return $this->getModel(User::class, $value);
-//        });
-//
-//        Route::bind('unit', function ($value, $route) {
-//            return $this->getModel(Unit::class, $value);
-//        });
-//
-//        Route::bind('course', function ($value, $route) {
-//            return $this->getModel(Course::class, $value);
-//        });
-//
-//        Route::bind('coupon', function ($value, $route) {
-//            return $this->getModel(Coupon::class, $value);
-//        });
-//
-//        Route::bind('order', function ($value, $route) {
-//            return $this->getModel(Order::class, $value);
-//        });
+        Route::bind('user', function ($value, $route) {
+            return $this->getModel(User::class, $value);
+        });
+
+        Route::bind('unit', function ($value, $route) {
+            return $this->getModel(Unit::class, $value);
+        });
+
+        Route::bind('course', function ($value, $route) {
+            return $this->getModel(Course::class, $value);
+        });
+
+        Route::bind('coupon', function ($value, $route) {
+            return $this->getModel(Coupon::class, $value);
+        });
+
+        Route::bind('order', function ($value, $route) {
+            return $this->getModel(Order::class, $value);
+        });
     }
 
-//    protected function getModel($model, $routeKey) {
-//        $id = \Hashids::connection($model)->decode($routeKey)[0] ?? null;
-//        $modelInstance = resolve($model);
-//        return $modelInstance->findOrFail($id);
-//    }
+    protected function getModel($model, $routeKey) {
+        $id = \Hashids::connection($model)->decode($routeKey)[0] ?? null;
+        $modelInstance = resolve($model);
+        return $modelInstance->findOrFail($id);
+    }
 
     /**
      * Define the routes for the application.

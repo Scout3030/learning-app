@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Coupon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CourseRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class CourseRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +25,51 @@ class CourseRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method()) {
+            case 'POST':
+            {
+                return [
+                    'courses' => ['required', 'array'],
+                    'code' => [
+                        'required',
+                        'min:6',
+                        'max:20',
+                        Rule::unique('coupons')->where(function ($query) {
+                            return $query->where('user_id', auth()->id());
+                        })
+                    ],
+                    'description' => 'required|min:10',
+                    'discount_type' => [
+                        'required',
+                        Rule::in(Coupon::PERCENT, Coupon::PRICE)
+                    ],
+                    'discount' => 'required',
+                ];
+            }
+            case 'PUT': {
+                return [
+                    'courses' => ['required', 'array'],
+                    'code' => [
+                        'required',
+                        'min:6',
+                        'max:20',
+                        Rule::unique('coupons')->where(function ($query) {
+                            return $query
+                                ->where('user_id', auth()->id())
+                                ->where('id', '!=', $this->route('coupon')->id);
+                        })
+                    ],
+                    'description' => 'required|min:10',
+                    'discount_type' => [
+                        'required',
+                        Rule::in(Coupon::PERCENT, Coupon::PRICE)
+                    ],
+                    'discount' => 'required',
+                ];
+            }
+            default: {
+                return [];
+            }
+        }
     }
 }

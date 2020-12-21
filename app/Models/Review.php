@@ -25,9 +25,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Review whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Review whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\User $author
  */
 class Review extends Model
 {
+    protected $fillable = ["user_id", "course_id", "stars", "review"];
+
+    public function course() {
+        return $this->belongsTo(Course::class);
+    }
     public function author() {
         return $this->belongsTo(User::class, "user_id");
     }

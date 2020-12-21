@@ -15,7 +15,7 @@
         </a>
     @else
         <a
-            href="{{-- route("courses.learn", ["course" => $course]) --}}"
+            href="{{ route("courses.learn", ["course" => $course]) }}"
             class="site-btn btn-block"
         >
             {{ __("Ir al curso") }}
